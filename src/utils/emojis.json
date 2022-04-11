@@ -1,0 +1,14 @@
+{
+    "emojis": {
+        "operational": "<:operational:959434979291594793>",
+        "degraded_performance": "<:degraded_performance:959434979731996722>",
+        "partial_outage": "<:partial_outage:959434979702624347>",
+        "major_outage": "<:major_outage:959434979794890812>",
+        "wumpus": "<:wumpus:959468893544525865>",
+        "ben": "<:lucaHEART:910691696361222177>",
+        "done": "<:done:959851428761976962>",
+        "mmlol": "<:mmlol:960627564529979433>",
+        "greenTick": "<:greenTick:960907673216352336>",
+        "redTick": "<:redTick:960907672973103124>"
+    }
+}

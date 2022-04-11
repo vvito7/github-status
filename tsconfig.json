@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "rootDir": "./src",
+      "outDir": "build",
+      "lib": ["ES2020"],
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "skipLibCheck": true,
+      "strict": true,
+    },
+    "include": [
+      "src/**/*.ts",
+    ]
+  }
