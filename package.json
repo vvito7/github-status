@@ -15,9 +15,9 @@
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "start": "npm run compile & npm run run",
-    "compile": "tsc",
-    "run": "node build/index.js",
+    "start": "node build/index.js",
+    "postinstall": "npm run tsc",
+    "tsc": "tsc",
     "lint": "eslint . --ext .ts",
     "fix": "eslint . --ext .ts --fix",
     "cmds": "node build/registerCommands.js",
