@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 config();
 
 const dbClient = new Client({
-    connectionString: process.env.databaseUrl,
+    connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
 });
 
