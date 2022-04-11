@@ -1,8 +1,9 @@
 import { Guild, Integration } from 'discord.js';
 import { APIDMChannel } from 'discord-api-types/v10';
 import { interact } from './interactWithAPI';
-import { applicationId } from '../config.json';
 import { initialMessage } from './replyMessages';
+import { config } from 'dotenv';
+config();
 
 export function sendInitialMessage(userId: string | null, guild: Guild): void {
     if (!userId) return;
@@ -33,7 +34,7 @@ export function getWhoInvited(guild: Guild): Promise<string | null> {
 function getIntegration(guild: Guild): Promise<Integration | undefined> {
     return guild.fetchIntegrations().then(integrations =>
         integrations.find(integration =>
-            (integration.application ? integration.application.id === applicationId : false)
+            (integration.application ? integration.application.id === process.env.applicationId : false)
         )
     );
 }

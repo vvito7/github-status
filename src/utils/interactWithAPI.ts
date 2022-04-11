@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
-import { botToken } from '../config.json';
+import { config } from 'dotenv';
+config();
 
 export function interact<T>(
     endpoint: string,
@@ -13,7 +14,7 @@ export function interact<T>(
             body: JSON.stringify(body),
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bot ${botToken}`,
+                Authorization: `Bot ${process.env.botToken}`,
             }
         }
     ).then(res => {

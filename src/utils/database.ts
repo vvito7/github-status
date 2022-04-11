@@ -1,8 +1,9 @@
 import { Client } from 'pg';
-import { databaseUrl } from '../config.json';
+import { config } from 'dotenv';
+config();
 
 const dbClient = new Client({
-    connectionString: databaseUrl,
+    connectionString: process.env.databaseUrl,
     ssl: { rejectUnauthorized: false }
 });
 

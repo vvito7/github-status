@@ -1,7 +1,7 @@
 import { Component, Statuspage, Summary } from 'statuspage.js';
 import { emojis } from '../utils/emojis.json';
 
-const sp: Statuspage = new Statuspage('xvb96fy2pl9t');
+const sp: Statuspage = new Statuspage('kctbh9vrtdwd');
 
 export function summary(): Promise<string> {
     return sp.summary().then(async (summary: Summary) =>

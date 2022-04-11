@@ -4,12 +4,12 @@ import { Incident, StatuspageUpdates } from 'statuspage.js';
 import { handleCommand } from './utils/handleCommand';
 import { getWhoInvited, sendInitialMessage } from './utils/sendInitialMessage';
 import { updateChannels } from './utils/updateChannels';
-import { botToken } from './config.json';
 import { startDb } from './utils/database';
+import { config } from 'dotenv';
+config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-// const spu = new StatuspageUpdates('kctbh9vrtdwd');
-const spu = new StatuspageUpdates('xvb96fy2pl9t');
+const spu = new StatuspageUpdates('kctbh9vrtdwd');
 
 client.ws.on('INTERACTION_CREATE', async (interaction: APIChatInputApplicationCommandInteraction) => {
     handleCommand(client, interaction);
@@ -26,4 +26,4 @@ client.on('guildCreate', async (guild: Guild) => {
 
 startDb();
 spu.start();
-client.login(botToken);
+client.login(process.env.botToken);
