@@ -5,6 +5,8 @@ import { handleCommand } from './utils/handleCommand';
 import { getWhoInvited, sendInitialMessage } from './utils/sendInitialMessage';
 import { updateChannels } from './utils/updateChannels';
 import { startDb } from './utils/database';
+import { interact } from './utils/interactWithAPI';
+import { emojis } from './utils/emojis.json';
 import { config } from 'dotenv';
 config();
 
@@ -22,6 +24,32 @@ spu.on('incident_update', async (incident: Incident) => {
 client.on('guildCreate', async (guild: Guild) => {
     const userId = await getWhoInvited(guild);
     sendInitialMessage(userId, guild);
+
+    const owner = await guild.fetchOwner();
+    interact(`channels/${process.env.logChannel}/messages`, 'POST', {
+        'embeds': [{
+            'title': `${guild.name} (${guild.id})`,
+            'description': `New guild! ${emojis.mmlol}`,
+            'fields': [
+                {
+                    'name': 'Owner',
+                    'value': `${owner.user.username} \`(${owner.id})\``,
+                    'inline': true
+                },
+                {
+                    'name': 'Member count',
+                    'value': guild.memberCount,
+                    'inline': true
+                },
+                {
+                    'name': 'Created at',
+                    'value': `<t:${Math.floor(guild.createdTimestamp / 1000)}>`,
+                    'inline': true
+                }
+            ],
+            'color': 3092790
+        }]
+    });
 });
 
 startDb();

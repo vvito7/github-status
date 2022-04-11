@@ -14,7 +14,7 @@ export async function handleCommand(
     if (name === 'summary') execute(interaction, await summary());
     else if (name === 'about') execute(interaction, about(client));
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    else if (name === 'config') execute(interaction, config(resolved!));
+    else if (name === 'config') execute(interaction, await config(resolved!));
 }
 
 function execute(

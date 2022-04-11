@@ -16,6 +16,6 @@ export function sendData(rows: string[], values: string[]): void {
     dbClient.query(`INSERT INTO guilds (${rows.join(', ')}) VALUES (${values.join(', ')})`);
 }
 
-export function getData() {
+export function getData(): Promise<Record<string, string>[]> {
     return dbClient.query('SELECT * FROM guilds').then(res => res.rows);
 }
