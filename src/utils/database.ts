@@ -9,11 +9,19 @@ const dbClient = new Client({
 
 export function startDb(): void {
     dbClient.connect();
-    dbClient.query('CREATE TABLE IF NOT EXISTS "guilds" ("channel" TEXT, "role" TEXT)');
+    dbClient.query('CREATE TABLE IF NOT EXISTS "guilds" ("channel" TEXT, "role" TEXT, "msg_id" TEXT)');
 }
 
-export function sendData(rows: string[], values: string[]): void {
-    dbClient.query(`INSERT INTO guilds (${rows.join(', ')}) VALUES (${values.join(', ')})`);
+export function sendData(
+    rows: string[] | string,
+    values: string[] | string | null,
+    condition?: string
+): void {
+    if (Array.isArray(rows) && Array.isArray(values)) {
+        dbClient.query(`INSERT INTO "guilds" (${rows.join(', ')}) VALUES (${values.join(', ')})`);
+    } else {
+        dbClient.query(`UPDATE "guilds" SET ${rows} = ${values} WHERE "channel" = '${condition}'`);
+    }
 }
 
 export function getData(): Promise<Record<string, string>[]> {

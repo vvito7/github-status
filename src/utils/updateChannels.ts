@@ -2,9 +2,7 @@ import { Incident, IncidentUpdates } from 'statuspage.js';
 import { APIEmbed, APIEmbedField, APIMessage } from 'discord-api-types/v10';
 import { interact } from './interactWithAPI';
 import { emojis } from './emojis.json';
-import { getData } from './database';
-
-const messagesIds: Record<string, string>[] = [];
+import { getData, sendData } from './database';
 
 export async function updateChannels(i: Incident) {
     const guilds = await getData();
@@ -24,23 +22,28 @@ export async function updateChannels(i: Incident) {
     };
 
     guilds.forEach(guild => {
-        const { channel, role } = guild;
+        const { channel, role, msg_id } = guild;
 
         if (i.incident_updates.length === 1) {
             interact<APIMessage>(`channels/${channel}/messages`, 'POST', {
                 'content': `<@&${role}>`,
                 'embeds': [incidentMessage],
             }).then(message => {
-                messagesIds.push({ 'channel': message.channel_id, 'message': message.id });
+                if (channel === message.channel_id) {
+                    sendData('msg_id', message.id, channel);
+                }
+
                 return;
             });
         } else {
-            const messageId = messagesIds.find(m => m.channel === guild.channel)?.message;
-
-            interact(`channels/${channel}/messages/${messageId}`, 'PATCH', {
+            interact(`channels/${channel}/messages/${msg_id}`, 'PATCH', {
                 'content': `<@&${role}>`,
                 'embeds': [incidentMessage],
             });
+        }
+
+        if (i.status === 'resolved') {
+            sendData('msg_id', null, channel);
         }
     });
 }
